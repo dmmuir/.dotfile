@@ -1,6 +1,7 @@
 " Referenced used
 " https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
 
+set sessionoptions+=globals
 let mapleader = ","
 
 " # Plugins
@@ -11,12 +12,23 @@ Plug 'dense-analysis/ale'
 " https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
 
+" https://github.com/fatih/vim-go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" https://vimawesome.com/plugin/vim-javascript
+Plug 'pangloss/vim-javascript'
+
+" https://github.com/MaxMEllon/vim-jsx-pretty
+Plug 'maxmellon/vim-jsx-pretty'
+
+" https://github.com/leafgarland/typescript-vim
+Plug 'leafgarland/typescript-vim'
+
 " https://www.nordtheme.com/docs/ports/vim/
 Plug 'arcticicestudio/nord-vim'
 
 " https://vimawesome.com/plugin/nimrod-vim
 Plug 'zah/nim.vim'
-
 
 " https://vimawesome.com/plugin/rust-vim-superman
 Plug 'rust-lang/rust.vim'
@@ -25,7 +37,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'zig-lang/zig.vim'
 
 call plug#end()
-
 
 " # General
 
@@ -116,7 +127,7 @@ set tabstop=4
 " ## Nord Theme
 "
 " Enable cursor background color highlighting
-set cursorline
+"set cursorline
 let g:nord_cursor_line_number_background = 0
 let g:nord_uniform_status_lines = 1
 
@@ -127,7 +138,6 @@ colorscheme nord
 " # Visual mode related
 
 " Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
@@ -141,3 +151,64 @@ map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
+
+" # Language Configuration
+
+" ## Ale settings
+set completeopt=menu,menuone,preview,noselect,noinsert
+let g:ale_lint_on_insert_leave = 1
+let g:ale_completion_enabled = 1
+let g:ale_lint_on_filetype_changed = 1
+let g:ale_hover_cursor = 1
+let g:ale_lsp_suggestions = 1
+let g:ale_rust_cargo_use_check = 1
+let g:ale_virtualtext_cursor = 1
+nnoremap <C-.> <Plug>(ale_hover)
+nnoremap <C-O> <Plug>(ale_import)
+
+" Linters
+let g:ale_linters = {
+\  'javascript': ['eslint'],
+\  'python': ['pylint', 'mypy'],
+\  'rust': ['analyzer'],
+\}
+
+let g:ale_fixers = { 
+\  'javascript': ['eslint'],
+\  'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines']
+\}
+
+" Enable language specific filetypes
+" Javascript
+
+" Typescript
+autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+
+" Rust
+autocmd BufNewFile,BufRead *.rs set filetype=rust
+augroup filetype_rust
+    au!
+    au BufRead,BufNewFile *.rs nnoremap K :ALEHover<CR>
+    au BufRead,BufNewFile *.rs nnoremap <C-]> :ALEGoToDefinition<CR>
+augroup END
+
+" Python Ale configurations
+let g:ale_python_pylint_options = '--load-plugins pylint_django'
+ 
+" # Helper Functions
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", "\\/.*'$^~[]")
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'gv'
+        call CmdLine("Ack '" . l:pattern . "' " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
