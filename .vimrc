@@ -80,6 +80,11 @@ set number
 set relativenumber
 set ruler
 
+" have a fixed column for the diagnostics to appear in
+" this removes the jitter when warnings/errors flow in
+set signcolumn=yes
+
+
 " Add a bit extra margin to the left
 "set foldcolumn=1
 
