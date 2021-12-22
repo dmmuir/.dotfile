@@ -30,9 +30,6 @@ Plug 'arcticicestudio/nord-vim'
 " https://vimawesome.com/plugin/nimrod-vim
 Plug 'zah/nim.vim'
 
-" https://vimawesome.com/plugin/rust-vim-superman
-Plug 'rust-lang/rust.vim'
-
 " https://vimawesome.com/plugin/zig-vim
 Plug 'zig-lang/zig.vim'
 

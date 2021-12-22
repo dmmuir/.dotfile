@@ -8,6 +8,12 @@ source ~/.vimrc
 
 call plug#begin(expand('~/.vim/plugged'))
 
+" https://github.com/vim-airline/vim-airline
+Plug 'vim-airline/vim-airline'
+
+" https://www.nordtheme.com/docs/ports/vim/
+Plug 'arcticicestudio/nord-vim'
+
 " https://github.com/neovim/nvim-lspconfig#rust_analyzer
 Plug 'neovim/nvim-lspconfig'
 
@@ -31,7 +37,6 @@ Plug 'simrat39/rust-tools.nvim'
 
 " Snippet engine
 Plug 'hrsh7th/vim-vsnip'
-
 
 call plug#end()
 
