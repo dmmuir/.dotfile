@@ -35,6 +35,31 @@ Plug 'zig-lang/zig.vim'
 
 call plug#end()
 
+" # Helper Functions
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", "\\/.*'$^~[]")
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'gv'
+        call CmdLine("Ack '" . l:pattern . "' " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
+
+function! SetCommentChar(char)
+    execute 'nnoremap ? :s/^/' . a:char . ' /g<CR>'
+    execute 'nnoremap <leader>? :s/^' . a:char . ' //g<CR>'
+    execute 'vnoremap ? :s/^/' . a:char . ' /g<CR>'
+    execute 'vnoremap <leader>? :s/^' . a:char . ' //g<CR>'
+endfunction
+ 
 " # General
 
 " Enable filetype plugins
@@ -98,6 +123,9 @@ imap <S-Tab> <Esc><<i
 vmap <Tab> >gv
 vmap <S-Tab> <gv
 
+" Comment Line(s)
+call SetCommentChar('#')
+
 " # Fonts and Colors
 
 
@@ -108,7 +136,7 @@ syntax enable
 set encoding=utf8
 
 " Use Unix as the standard file type
-set ffs=unix,dos,mac
+set ffs=unix,mac,dos
 
 " # Files, backups and undo
 
@@ -182,9 +210,17 @@ let g:ale_fixers = {
 
 " Enable language specific filetypes
 " Javascript
+autocmd BufRead,BufNewFile *.js call SetCommentChar('\/\/')
 
 " Typescript
-autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+autocmd BufNewFile,BufRead *.ts set filetype=typescript
+augroup typescript 
+    au BufRead,BufNewFile *.ts setlocal formatprg=prettier\ --parser\ typescript
+    au BufRead,BufNewFile *.ts call SetCommentChar('\/\/')
+augroup END
+
+" Go
+autocmd BufRead,BufNewFile *.go call SetCommentChar('\/\/')
 
 " Rust
 autocmd BufNewFile,BufRead *.rs set filetype=rust
@@ -192,25 +228,9 @@ augroup filetype_rust
     au!
     au BufRead,BufNewFile *.rs nnoremap K :ALEHover<CR>
     au BufRead,BufNewFile *.rs nnoremap <C-]> :ALEGoToDefinition<CR>
+    au BufRead,BufNewFile *.rs call SetCommentChar('\/\/')
 augroup END
 
 " Python Ale configurations
 let g:ale_python_pylint_options = '--load-plugins pylint_django'
- 
-" # Helper Functions
-function! VisualSelection(direction, extra_filter) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
 
-    let l:pattern = escape(@", "\\/.*'$^~[]")
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-    if a:direction == 'gv'
-        call CmdLine("Ack '" . l:pattern . "' " )
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
