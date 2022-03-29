@@ -1,0 +1,15 @@
+#!/bin/sh
+
+bluetoothctl -- power on
+
+pixel_buds_mac="D8:8C:79:08:0C:F5"
+connection_status=$(bluetoothctl -- info $pixel_buds_mac | awk '$0~/Connected/ {print $2}')
+
+if [[ "${connection_status}" != 'yes' ]]
+then
+    bluetoothctl -- connect $pixel_buds_mac
+else
+    bluetoothctl -- disconnect $pixel_buds_mac
+fi
+    
+
