@@ -32,6 +32,9 @@ Plug 'hrsh7th/cmp-buffer'
 
 " See hrsh7th's other plugins for more completion sources!
 
+" Golang
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 " To enable more of the features of rust-analyzer, such as inlay hints and more!
 Plug 'simrat39/rust-tools.nvim'
 

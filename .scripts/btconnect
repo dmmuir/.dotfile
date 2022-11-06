@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Usage:
+# btconnect <device-name>
+
+bluetoothctl -- power on > /dev/null
+
+bt_device_mac="$(bluetoothctl -- devices | grep $1 | awk '{print $2}')"
+
+if [[ -z "$bt_device_mac" ]] ;
+then
+    bluetoothctl -- devices
+    bluetoothctl -- power off > /dev/null
+    exit 0
+fi
+
+connection_status=$(bluetoothctl -- info $bt_device_mac | awk '$0~/Connected/ {print $2}')
+
+if [[ "${connection_status}" != 'yes' ]]
+then
+    bluetoothctl -- connect $bt_device_mac
+else
+    bluetoothctl -- disconnect $bt_device_mac
+    bluetoothctl -- power off > /dev/null
+fi
+    
+
