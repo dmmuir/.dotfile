@@ -12,6 +12,13 @@ Plug 'dense-analysis/ale'
 " https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
 
+" https://liquidz.github.io/vim-iced/
+Plug 'ctrlpvim/ctrlp.vim', {'for': 'clojure'}
+
+" Requires
+Plug 'guns/vim-sexp',    {'for': 'clojure'}
+Plug 'liquidz/vim-iced', {'for': 'clojure'}
+
 " https://github.com/fatih/vim-go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
@@ -54,10 +61,10 @@ function! VisualSelection(direction, extra_filter) range
 endfunction
 
 function! SetCommentChar(char)
-    execute 'nnoremap ? :s/^/' . a:char . ' /g<CR>'
-    execute 'nnoremap <leader>? :s/^' . a:char . ' //g<CR>'
-    execute 'vnoremap ? :s/^/' . a:char . ' /g<CR>'
-    execute 'vnoremap <leader>? :s/^' . a:char . ' //g<CR>'
+    execute 'nnoremap ? I' . a:char . '    <ESC>'
+    execute 'nnoremap <leader>? 0ce<ESC>'
+    execute 'vnoremap ? :normal I' . a:char . '    <CR>'
+    execute 'vnoremap <leader>? :normal 0ce<CR>'
 endfunction
  
 " # General
@@ -79,8 +86,7 @@ au FocusGained,BufEnter * checktime
 " # Vim Interface " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
-" Set column width
-"set columns=80
+" Set column width (80)
 set textwidth=80
 
 " Find files
@@ -90,7 +96,7 @@ set path+=**
 set wildmenu
 
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+set wildignore=*.o,*~,*.pyc,.*
 if has("win16") || has("win32")
     set wildignore+=.git\*,.hg\*,.svn\*
 else
@@ -111,7 +117,7 @@ set signcolumn=yes
 "set foldcolumn=1
 
 " Create the `tags` file (may need to install ctags first)
-command! MakeTags !ctags -R .
+command! MakeTags !ctags .
 
 
 " # Navigation
@@ -154,6 +160,9 @@ set expandtab
 set shiftwidth=4
 set tabstop=4
 
+" Line width column marker (default 80)
+set colorcolumn=80
+
 " ## Nord Theme
 "
 " Enable cursor background color highlighting
@@ -170,6 +179,13 @@ colorscheme nord
 " Visual mode pressing * or # searches for the current selection
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+vmap <leader>( xi()<Esc>P
+vmap <leader>[ xi[]<Esc>P
+vmap <leader>{ xi{}<Esc>P
+vmap <leader>" xi""<Esc>P
+vmap <leader>' xi''<Esc>P
+vmap <leader>< xi<><Esc>P
 
 " # Spell checking
 
@@ -207,6 +223,14 @@ let g:ale_fixers = {
 \  'javascript': ['eslint'],
 \  'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines']
 \}
+
+" Clojure
+autocmd BufNewFile,BufRead *.clj set filetype=clojure
+autocmd BufRead,BufNewFile *.clj call SetCommentChar('\/\/')
+augroup clojure
+" Iced Keybindings
+let g:iced_enable_default_key_mappings = v:true
+augroup END
 
 " Enable language specific filetypes
 " Javascript
