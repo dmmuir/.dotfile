@@ -61,10 +61,10 @@ function! VisualSelection(direction, extra_filter) range
 endfunction
 
 function! SetCommentChar(char)
-    execute 'nnoremap ? I' . a:char . '    <ESC>'
-    execute 'nnoremap <leader>? 0ce<ESC>'
-    execute 'vnoremap ? :normal I' . a:char . '    <CR>'
-    execute 'vnoremap <leader>? :normal 0ce<CR>'
+    execute 'nnoremap ? I' . a:char . ' <TAB><ESC>'
+    execute 'nnoremap <leader>? 0ce <ESC>'
+    execute 'vnoremap ? :normal 0i' . a:char . '  <CR>'
+    execute 'vnoremap <leader>? :normal 03x<CR>'
 endfunction
  
 " # General
@@ -226,7 +226,7 @@ let g:ale_fixers = {
 
 " Clojure
 autocmd BufNewFile,BufRead *.clj set filetype=clojure
-autocmd BufRead,BufNewFile *.clj call SetCommentChar('\/\/')
+autocmd BufRead,BufNewFile *.clj call SetCommentChar('//')
 augroup clojure
 " Iced Keybindings
 let g:iced_enable_default_key_mappings = v:true
@@ -234,13 +234,13 @@ augroup END
 
 " Enable language specific filetypes
 " Javascript
-autocmd BufRead,BufNewFile *.js call SetCommentChar('\/\/')
+autocmd BufRead,BufNewFile *.js call SetCommentChar('//')
 
 " Typescript
 autocmd BufNewFile,BufRead *.ts set filetype=typescript
 augroup typescript 
     au BufRead,BufNewFile *.ts setlocal formatprg=prettier\ --parser\ typescript
-    au BufRead,BufNewFile *.ts call SetCommentChar('\/\/')
+    au BufRead,BufNewFile *.ts call SetCommentChar('//')
 augroup END
 
 " Yaml
@@ -258,7 +258,9 @@ let g:ale_lint_on_text_changed = 'never'
 augroup END
 
 " Go
-autocmd BufRead,BufNewFile *.go call SetCommentChar('\/\/')
+autocmd BufRead,BufNewFile *.go call SetCommentChar('//')
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 " Rust
 autocmd BufNewFile,BufRead *.rs set filetype=rust
@@ -266,9 +268,18 @@ augroup filetype_rust
     au!
     au BufRead,BufNewFile *.rs nnoremap K :ALEHover<CR>
     au BufRead,BufNewFile *.rs nnoremap <C-]> :ALEGoToDefinition<CR>
-    au BufRead,BufNewFile *.rs call SetCommentChar('\/\/')
+    au BufRead,BufNewFile *.rs call SetCommentChar('//')
 augroup END
 
 " Python Ale configurations
 let g:ale_python_pylint_options = '--load-plugins pylint_django'
+
+" Lisp
+let g:slimv_repl_split = 4
+
+" Vim or ~/.vimrc
+autocmd BufNewFile,BufRead *.vim,.vimrc set filetype=vim
+augroup vim
+    call SetCommentChar('"')
+augroup END
 
