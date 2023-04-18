@@ -1,0 +1,26 @@
+theme = "nord"
+
+[editor]
+true-color = true
+color-modes = true
+bufferline = "multiple"
+rulers = [80]
+
+
+[editor.statusline]
+center = [ "version-control" ]
+right = ["diagnostics", "selections", "separator", "position", "position-percentage", "spacer", "separator", "total-line-numbers", "file-encoding", "file-line-ending", "file-type"]
+separator = "|"
+
+
+[editor.lsp]
+display-inlay-hints = true
+display-messages = true
+
+
+[editor.file-picker]
+hidden = false
+
+
+[editor.indent-guides]
+render = true
