@@ -14,8 +14,9 @@
 #
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
-#import:
+import:
 #  - /path/to/alacritty.yml
+  - ~/.config/alacritty/themes/themes/nord.yaml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -27,7 +28,7 @@ env:
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  TERM: screen-256color
+  # TERM: screen-256color
 
 window:
   # Window dimensions (changes require restart)
@@ -97,7 +98,7 @@ window:
   #
   # Override the variant of the GTK theme. Commonly supported values are `dark`
   # and `light`. Set this to `None` to use the default theme variant.
-  #gtk_theme_variant: None
+  gtk_theme_variant: dark
 
 #scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -182,11 +183,11 @@ window:
 #draw_bold_text_with_bright_colors: false
 
 # Colors (Nord)
-colors:
+# colors:
   # Default colors
-  primary:
-    background: '#2e3440'
-    foreground: '#d8dee9'
+  # primary:
+    # background: '#2e3440'
+    # foreground: '#d8dee9'
 
     # Bright and dim foreground colors
     #
@@ -194,7 +195,7 @@ colors:
     # present. If the bright foreground color is not set, or
     # `draw_bold_text_with_bright_colors` is `false`, the normal foreground
     # color will be used.
-    dim_foreground: '#a5abb6'
+    # dim_foreground: '#a5abb6'
     #bright_foreground: '#eaeaea'
 
   # Cursor colors
@@ -203,9 +204,9 @@ colors:
   #
   # Allowed values are CellForeground/CellBackground, which reference the
   # affected cell, or hexadecimal colors like #ff00ff.
-  cursor:
-    text: '#2e3440'
-    cursor: '#d8dee9'
+  # cursor:
+    # text: '#2e3440'
+    # cursor: '#d8dee9'
 
   # Vi mode cursor colors
   #
@@ -213,26 +214,26 @@ colors:
   #
   # Allowed values are CellForeground/CellBackground, which reference the
   # affected cell, or hexadecimal colors like #ff00ff.
-  vi_mode_cursor:
-    text: '#2e3440'
-    cursor: '#d8dee9'
+  # vi_mode_cursor:
+    # text: '#2e3440'
+    # cursor: '#d8dee9'
 
   # Search colors
   #
   # Colors used for the search bar and match highlighting.
-  search:
+  # search:
     # Allowed values are CellForeground/CellBackground, which reference the
     # affected cell, or hexadecimal colors like #ff00ff.
-    matches:
-      foreground: CellBackground
-      background: '#88c0d0'
+    # matches:
+      # foreground: CellBackground
+      # background: '#88c0d0'
     #focused_match:
     #  foreground: CellBackground
     #  background: CellForeground
 
-    bar:
-      background: '#434c5e' 
-      foreground: '#d8dee9' 
+    # footer_bar:
+      # background: '#434c5e' 
+      # foreground: '#d8dee9' 
 
   # Keyboard hints
   #hints:
@@ -268,45 +269,45 @@ colors:
   #
   # Allowed values are CellForeground/CellBackground, which reference the
   # affected cell, or hexadecimal colors like #ff00ff.
-  selection:
-    text: CellForeground
-    background: '#4c566a'
+  # selection:
+    # text: CellForeground
+    # background: '#4c566a'
 
   # Normal colors
-  normal:
-    black:   '#3b4252'
-    red:     '#bf616a'
-    green:   '#a3be8c'
-    yellow:  '#ebcb8b'
-    blue:    '#81a1c1'
-    magenta: '#b48ead'
-    cyan:    '#88c0d0'
-    white:   '#e5e9f0'
+  # normal:
+    # black:   '#3b4252'
+    # red:     '#bf616a'
+    # green:   '#a3be8c'
+    # yellow:  '#ebcb8b'
+    # blue:    '#81a1c1'
+    # magenta: '#b48ead'
+    # cyan:    '#88c0d0'
+    # white:   '#e5e9f0'
     
   # Bright colors
-  bright:
-    black:   '#4c566a'
-    red:     '#bf616a'
-    green:   '#a3be8c'
-    yellow:  '#ebcb8b'
-    blue:    '#81a1c1'
-    magenta: '#b48ead'
-    cyan:    '#8fbcbb'
-    white:   '#eceff4'
+  # bright:
+    # black:   '#4c566a'
+    # red:     '#bf616a'
+    # green:   '#a3be8c'
+    # yellow:  '#ebcb8b'
+    # blue:    '#81a1c1'
+    # magenta: '#b48ead'
+    # cyan:    '#8fbcbb'
+    # white:   '#eceff4'
 
   # Dim colors
   #
   # If the dim colors are not set, they will be calculated automatically based
   # on the `normal` colors.
-  dim:
-    black:   '#373e4d'
-    red:     '#94545d'
-    green:   '#809575'
-    yellow:  '#b29e75'
-    blue:    '#68809a'
-    magenta: '#8c738c'
-    cyan:    '#6d96a5'
-    white:   '#aeb3bb'
+  # dim:
+    # black:   '#373e4d'
+    # red:     '#94545d'
+    # green:   '#809575'
+    # yellow:  '#b29e75'
+    # blue:    '#68809a'
+    # magenta: '#8c738c'
+    # cyan:    '#6d96a5'
+    # white:   '#aeb3bb'
 
   # Indexed Colors
   #
@@ -432,7 +433,8 @@ colors:
 #  args:
 #    - --login
 shell:
-   program: /bin/zsh
+   #program: /bin/zsh
+   program: /bin/bash
    args:
      - -l
      - -c
