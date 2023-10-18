@@ -13,8 +13,10 @@ set $left h
 set $down j
 set $up k
 set $right l
+
 # Your preferred terminal emulator
 set $term alacritty
+
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -25,6 +27,7 @@ set $menu tofi-run | xargs swaymsg exec --
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /usr/share/backgrounds/sway/nord-dark.png fill
+
 #
 # Example configuration:
 #
@@ -210,7 +213,24 @@ bindsym $mod+r mode "resize"
 # Remove the blue window border and title
 default_border none
 
-#
+# Increase volume
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1000
+
+# Decrease volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1000
+
+# Mute volume
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Mute microphone
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Increase Brightness
+bindsym  XF86MonBrightnessDown exec brightnessctl set 5%-
+
+# Decrease Brightness
+bindsym  XF86MonBrightnessUp exec brightnessctl set 5%+
+
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
