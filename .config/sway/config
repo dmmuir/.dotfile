@@ -252,6 +252,24 @@ bar swaybar_command waybar
 #    }
 #}
 
+#
+# GTK Theme
+#
+exec_always {
+    gsettings set org.gnome.desktop.interface gtk-theme "Nordic"
+    gsettings set org.gnome.desktop.wm.preferences theme "Nordic"
+}
 
 include /etc/sway/config.d/*
-#exec waybar
+
+#
+# Start My Apps
+#
+    workspace 9:telegram
+    exec telegram-desktop
+
+    workspace 10:music
+    exec psst-gui
+
+    workspace 1:term
+    exec $term
