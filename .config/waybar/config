@@ -4,9 +4,9 @@
     "height": 24, // Waybar height
     // "width": 1366, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify"],
+    "modules-left": ["sway/workspaces", "custom/spotify", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray", "clock"],
+    "modules-right": ["privacy", "pulseaudio", "network", "cpu", "memory", "battery", "tray", "clock"],
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
@@ -17,7 +17,7 @@
             "2:code": "",
             "4:work": "",
             "9:telegram": "",
-            "10:music": "",
+            "10:music": "",
             "urgent": "",
             "focused": "",
             "default": ""
@@ -62,9 +62,10 @@
     },
     "pulseaudio": {
         //"scroll-step": 1,
-        "format": "{volume}% {icon}",
+        "format": "{volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon}",
         "format-muted": "",
+        "format-source": " mic:muted",
         "format-icons": {
             "headphones": "",
             "handsfree": "",
@@ -74,7 +75,7 @@
             "car": "",
             "default": ["", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "ncpamixer"
     },
     "custom/spotify": {
         "format": " {}",
@@ -82,5 +83,27 @@
         "interval": 3, // Remove this if your script is endless and write in loop
         "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
         "exec-if": "pgrep psst-gui"
+    },
+    "privacy": {
+    	"icon-spacing": 4,
+    	"icon-size": 18,
+    	"transition-duration": 250,
+    	"modules": [
+    		{
+    			"type": "screenshare",
+    			"tooltip": true,
+    			"tooltip-icon-size": 24
+    		},
+    		{
+    			"type": "audio-out",
+    			"tooltip": true,
+    			"tooltip-icon-size": 24
+    		},
+    		{
+    			"type": "audio-in",
+    			"tooltip": true,
+    			"tooltip-icon-size": 24
+    		}
+    	]
     }
 }

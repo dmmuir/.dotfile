@@ -326,7 +326,7 @@ user_pref("network.gio.supported-protocols", ""); // [HIDDEN PREF]
    // user_pref("network.trr.mode", 5);
 
 /*** [SECTION 0800]: LOCATION BAR / SEARCH BAR / SUGGESTIONS / HISTORY / FORMS ***/
-user_pref("_user.js.parrot", "0800 syntax error: the parrot's ceased to be!");
+// user_pref("_user.js.parrot", "0800 syntax error: the parrot's ceased to be!");
 /* 0801: disable location bar using search
  * Don't leak URL typos to a search engine, give an error message instead
  * Examples: "secretplace,com", "secretplace/com", "secretplace com", "secret place.com"
@@ -334,7 +334,7 @@ user_pref("_user.js.parrot", "0800 syntax error: the parrot's ceased to be!");
  * dropdown, or using keyword search shortcuts you configure in options (e.g. "d" for DuckDuckGo)
  * [SETUP-CHROME] If you don't, or rarely, type URLs, or you use a default search
  * engine that respects privacy, then you probably don't need this ***/
-user_pref("keyword.enabled", false);
+user_pref("keyword.enabled", true);
 /* 0802: disable location bar domain guessing
  * domain guessing intercepts DNS "hostname not found errors" and resends a
  * request (e.g. by adding www or .com). This is inconsistent use (e.g. FQDNs), does not work
@@ -342,15 +342,15 @@ user_pref("keyword.enabled", false);
  * as the 411 for DNS errors?), privacy issues (why connect to sites you didn't
  * intend to), can leak sensitive data (e.g. query strings: e.g. Princeton attack),
  * and is a security risk (e.g. common typos & malicious sites set up to exploit this) ***/
-user_pref("browser.fixup.alternate.enabled", false);
+user_pref("browser.fixup.alternate.enabled", true);
 /* 0803: display all parts of the url in the location bar ***/
 user_pref("browser.urlbar.trimURLs", false);
 /* 0804: disable live search suggestions
  * [NOTE] Both must be true for the location bar to work
  * [SETUP-CHROME] Change these if you trust and use a privacy respecting search engine
  * [SETTING] Search>Provide search suggestions | Show search suggestions in address bar results ***/
-user_pref("browser.search.suggest.enabled", false);
-user_pref("browser.urlbar.suggest.searches", false);
+user_pref("browser.search.suggest.enabled", true);
+user_pref("browser.urlbar.suggest.searches", true);
 /* 0805: disable location bar making speculative connections [FF56+]
  * [1] https://bugzilla.mozilla.org/1348275 ***/
 user_pref("browser.urlbar.speculativeConnect.enabled", false);
@@ -361,7 +361,7 @@ user_pref("browser.urlbar.dnsResolveSingleWordsAfterSearch", 0);
 /* 0807: disable location bar contextual suggestions [FF92+]
  * [SETTING] Privacy & Security>Address Bar>Suggestions from...
  * [1] https://blog.mozilla.org/data/2021/09/15/data-and-firefox-suggest/ ***/
-user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", false); // [FF95+]
+user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", true); // [FF95+]
 user_pref("browser.urlbar.suggest.quicksuggest.sponsored", false);
 /* 0808: disable tab-to-search [FF85+]
  * Alternatively, you can exclude on a per-engine basis by unchecking them in Options>Search
@@ -1343,3 +1343,15 @@ user_pref("browser.urlbar.suggest.quicksuggest", false);
 
 /* END: internal custom pref to test for syntax errors ***/
 user_pref("_user.js.parrot", "SUCCESS: No no he's not dead, he's, he's restin'!");
+
+/******
+ * user.js
+ * https://github.com/rafaelmardojai/firefox-gnome-theme/
+******/ 
+
+// Enable customChrome.css
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+
+// Enable CSD
+user_pref("browser.tabs.drawInTitlebar", true);
+
