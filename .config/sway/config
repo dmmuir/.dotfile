@@ -108,8 +108,6 @@ input type:keyboard {
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
-    # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
@@ -223,6 +221,40 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+mode "mediaPlayer" {
+    # Pause Media Player
+    bindsym $mod+space exec playerctl play-pause, mode "default"
+
+    # Next Song
+    bindsym $mod+n exec playerctl next
+
+    # Previous Song
+    bindsym $mod+p exec playerctl previous 
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+Shift+space mode "default"
+}
+
+bindsym $mod+Shift+space mode "mediaPlayer"
+
+set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
+set $powerctl loginctl
+mode "$mode_system" {
+    bindsym l exec $lock, mode "default"
+    bindsym e exit
+    bindsym s exec --no-startup-id suspend, mode "default"
+    bindsym r exec --no-startup-id $powerctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id $powerctl poweroff -i, mode "default"
+    bindsym Shift+r exec --no-startup-id $powerctl reboot --firmware-setup, mode "default"
+
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+e mode "$mode_system"
+
 # Remove the blue window border and title
 default_border none
 
@@ -249,14 +281,6 @@ default_border none
     # Decrease Brightness
     bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
 
-    # Pause Media Player
-    bindsym $mod+space exec playerctl play-pause
-
-    # Next Song
-    bindsym $mod+n exec playerctl next
-
-    # Previous Song
-    bindsym $mod+p exec playerctl previous
 #
 # Status Bar:
 #
@@ -275,13 +299,12 @@ exec_always {
 #
 # Start My Apps
 #
-    workspace 9:telegram
-    exec telegram-desktop
+    exec $term 
+    exec telegram-desktop 
+    exec --no-startup-id psst-gui
 
-    workspace 10:music
-    exec psst-gui
+    assign [app_id="telegram-desktop"] 9:telegram
+    assign [app_id="psst-gui"] 10:music
 
-    workspace 1:term
-    exec $term
  
 include /etc/sway/config.d/*

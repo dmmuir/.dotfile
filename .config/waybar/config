@@ -6,7 +6,7 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "custom/spotify", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["privacy", "pulseaudio", "network", "cpu", "memory", "battery", "tray", "clock"],
+    "modules-right": ["privacy", "custom/mic-mute", "pulseaudio", "network", "cpu", "memory", "battery", "tray", "clock"],
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
@@ -58,14 +58,14 @@
         "interface": "wlan0", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-        "format-disconnected": "Disconnected ⚠"
+        "format-disconnected": "Disconnected ⚠",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n{frequency}GHz at {bandwidthUpBytes}/{bandwidthDownBytes}"
     },
     "pulseaudio": {
         //"scroll-step": 1,
-        "format": "{volume}% {icon} {format_source}",
+        "format": "{volume}% {icon}",
         "format-bluetooth": "{volume}% {icon}",
         "format-muted": "",
-        "format-source": " mic:muted",
         "format-icons": {
             "headphones": "",
             "handsfree": "",
@@ -83,6 +83,12 @@
         "interval": 3, // Remove this if your script is endless and write in loop
         "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
         "exec-if": "pgrep psst-gui"
+    },
+    "custom/mic-mute": {
+        "format": "{}",
+        "max-length": 40,
+        "interval": 1, // Remove this if your script is endless and write in loop
+        "exec": "$HOME/.config/waybar/mic-mute.sh 2> /dev/null", // Script in resources folder
     },
     "privacy": {
     	"icon-spacing": 4,
