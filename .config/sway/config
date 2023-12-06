@@ -223,7 +223,8 @@ bindsym $mod+r mode "resize"
 
 mode "mediaPlayer" {
     # Pause Media Player
-    bindsym $mod+space exec playerctl play-pause, mode "default"
+    bindsym $mod+space exec playerctl play-pause
+    bindsym $mod+Shift+space exec playerctl play-pause, mode "default"
 
     # Next Song
     bindsym $mod+n exec playerctl next
@@ -234,7 +235,6 @@ mode "mediaPlayer" {
     # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
-    bindsym $mod+Shift+space mode "default"
 }
 
 bindsym $mod+Shift+space mode "mediaPlayer"
