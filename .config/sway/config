@@ -281,6 +281,12 @@ default_border none
     # Decrease Brightness
     bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
 
+    # Disable Sleep Button
+    bindsym XF86Sleep ""
+
+    # Disable PowerOff
+    bindsym XF86PowerOff ""
+
 #
 # Status Bar:
 #
@@ -300,7 +306,7 @@ exec_always {
 # Start My Apps
 #
     exec $term 
-    exec telegram-desktop 
+    exec --no-startup-id telegram-desktop 
     exec --no-startup-id psst-gui
 
     assign [app_id="telegram-desktop"] 9:telegram
